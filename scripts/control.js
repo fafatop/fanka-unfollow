@@ -8,7 +8,6 @@
   ];
   const UNFOLLOW_URL = "https://api.finka.cn/user/match/dislike/v3";
   const MAX_PAGES_PER_SCAN = 100;
-  const MAX_USERS = 1500;
   const BATCH_SIZE = 100;
   const CONCURRENCY = 4;
   const LAUNCH_INTERVAL_MS = 120;
@@ -186,10 +185,10 @@
         finishPage(db, "完整名单获取完成，已合并未回关与封禁/注销用户。");
         return;
       }
-      if (pagesForSource >= MAX_PAGES_PER_SCAN || db.ids.length >= MAX_USERS) {
+      if (pagesForSource >= MAX_PAGES_PER_SCAN) {
         db.scanComplete = false;
         saveDb(db);
-        finishPage(db, "已达到扫描安全上限，请检查名单数量后重试。");
+        finishPage(db, "当前来源已达到 100 页防循环上限，请检查分页状态后重试。");
         return;
       }
       const source = LIST_SOURCES[sourceIndex];
