@@ -1,4 +1,4 @@
-#!name = Fanka v1.0
+#!name = Fanka v1.1
 #!desc = 取关未回关的用户；访问http://finka-unfollow.loon.invalid/
 #!author = fafatop
 #!homepage = https://github.com/fafatop/fanka-unfollow
@@ -8,7 +8,7 @@
 
 [Script]
 response if ${url} ~= /^https:\/\/api\.finka\.cn\/vas\/relation\/liked\/(?:unmatched|ban)(?:\?[^#]*)?$/ then script("https://raw.githubusercontent.com/fafatop/fanka-unfollow/refs/heads/main/scripts/collect.js?v=2") with requires_body=true, timeout=10, tag="Capture unfollow lists"
-request if ${url} ~= /^http:\/\/finka-unfollow\.loon\.invalid\/(?:[^#]*)?$/ then script("https://raw.githubusercontent.com/fafatop/fanka-unfollow/refs/heads/main/scripts/control.js?v=4") with timeout=300, tag="Fanka unfollow manager"
+request if ${url} ~= /^http:\/\/finka-unfollow\.loon\.invalid\/(?:[^#]*)?$/ then script("https://raw.githubusercontent.com/fafatop/fanka-unfollow/c24a46d0c19f2df6490bd0da9b24e8234b7769e5/scripts/control.js") with timeout=300, tag="Fanka unfollow manager"
 
 [Host]
 finka-unfollow.loon.invalid = 192.0.2.9
