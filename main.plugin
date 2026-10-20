@@ -1,5 +1,5 @@
 #!name = Fanka v1.0
-#!desc = 取关未回关的人
+#!desc = 取关未回关的用户；访问http://finka-unfollow.loon.invalid/
 #!author = fafatop
 #!homepage = https://github.com/fafatop/fanka-unfollow
 #!icon = https://raw.githubusercontent.com/fafatop/fanka-unfollow/main/icon.png
