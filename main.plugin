@@ -1,0 +1,17 @@
+#!name = Fanka Unfollow v1.0
+#!desc = Merge non-mutual follows and banned or deactivated accounts, then unfollow them with live progress.
+#!author = fafatop
+#!homepage = https://github.com/fafatop/fanka-unfollow
+#!loon_version = 3.5.1(983)
+#!date = 2026-10-20
+
+[Script]
+response if ${url} ~= /^https:\/\/api\.finka\.cn\/vas\/relation\/liked\/(?:unmatched|ban)(?:\?[^#]*)?$/ then script("https://raw.githubusercontent.com/fafatop/fanka-unfollow/main/scripts/collect.js?v=1") with requires_body=true, timeout=10, tag="Capture unfollow lists"
+request if ${url} ~= /^http:\/\/finka-unfollow\.loon\.invalid\/(?:[^#]*)?$/ then script("https://raw.githubusercontent.com/fafatop/fanka-unfollow/main/scripts/control.js?v=1") with timeout=300, tag="Fanka unfollow manager"
+
+[Host]
+finka-unfollow.loon.invalid = 192.0.2.9
+
+[Mitm]
+hostname = api.finka.cn
+
