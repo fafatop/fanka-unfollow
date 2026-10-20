@@ -2,6 +2,7 @@
 #!desc = Merge non-mutual follows and banned or deactivated accounts, then unfollow them with live progress.
 #!author = fafatop
 #!homepage = https://github.com/fafatop/fanka-unfollow
+#!icon = https://raw.githubusercontent.com/fafatop/fanka-unfollow/main/icon.png
 #!loon_version = 3.5.1(983)
 #!date = 2026-10-20
 
