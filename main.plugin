@@ -8,7 +8,7 @@
 
 [Script]
 response if ${url} ~= /^https:\/\/api\.finka\.cn\/vas\/relation\/liked\/(?:unmatched|ban)(?:\?[^#]*)?$/ then script("https://raw.githubusercontent.com/fafatop/fanka-unfollow/refs/heads/main/scripts/collect.js?v=2") with requires_body=true, timeout=10, tag="Capture unfollow lists"
-request if ${url} ~= /^http:\/\/finka-unfollow\.loon\.invalid\/(?:[^#]*)?$/ then script("https://raw.githubusercontent.com/fafatop/fanka-unfollow/refs/heads/main/scripts/control.js?v=3") with timeout=300, tag="Fanka unfollow manager"
+request if ${url} ~= /^http:\/\/finka-unfollow\.loon\.invalid\/(?:[^#]*)?$/ then script("https://raw.githubusercontent.com/fafatop/fanka-unfollow/refs/heads/main/scripts/control.js?v=4") with timeout=300, tag="Fanka unfollow manager"
 
 [Host]
 finka-unfollow.loon.invalid = 192.0.2.9
