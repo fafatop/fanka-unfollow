@@ -1,5 +1,5 @@
-#!name = Fanka Unfollow v1.0
-#!desc = Merge non-mutual follows and banned or deactivated accounts, then unfollow them with live progress.
+#!name = Fanka v1.0
+#!desc = 取关未回关的人
 #!author = fafatop
 #!homepage = https://github.com/fafatop/fanka-unfollow
 #!icon = https://raw.githubusercontent.com/fafatop/fanka-unfollow/main/icon.png
