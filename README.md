@@ -31,12 +31,12 @@
 
 ## 安装
 
-[一键导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Ffafatop%2Ffanka-unfollow%2Fmain%2Fmain.plugin)
+[一键导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Ffafatop%2Ffanka-unfollow%2Frefs%2Fheads%2Fmain%2Fmain.plugin)
 
 也可以复制以下地址，在 Loon 中手动添加插件：
 
 ```text
-https://raw.githubusercontent.com/fafatop/fanka-unfollow/main/main.plugin
+https://raw.githubusercontent.com/fafatop/fanka-unfollow/refs/heads/main/main.plugin
 ```
 
 ## 使用方法
