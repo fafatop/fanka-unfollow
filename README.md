@@ -1,55 +1,97 @@
-# Fanka Unfollow
+# 翻咔未回关管理
 
-A Loon plugin for managing Finka accounts that do not follow back, including followed accounts that have been banned or deactivated.
+一个适用于 Loon 的翻咔取关插件，可获取并合并以下两类账号：
 
-## Features
+- 未回关的账号
+- 已被封禁或注销、但仍处于关注列表中的账号
 
-- Captures both non-mutual-follow and banned/deactivated account lists.
-- Follows every cursor page and removes duplicate accounts.
-- Runs ordinary unfollow requests with bounded concurrency and automatic retry/backoff.
-- Shows live processed, successful, failed, and remaining counts.
-- Displays a progress bar that refreshes about every 500 milliseconds.
-- Sends a rate-limited Loon notification that opens the local control page.
-- Stores account IDs and progress only in Loon's local persistent storage.
+插件会自动获取全部分页、合并去重，并提供一键取关、实时进度和失败重试功能。
 
-## Requirements
+## 功能
 
-- iOS only.
-- Allow Loon notifications in iOS Settings.
-- Loon 3.5.1 (983) or later.
-- Enable Script, Rewrite, and MITM in Loon.
-- Install and trust the Loon MITM certificate.
+- 获取完整的未回关名单
+- 获取封禁或注销账号名单
+- 自动读取全部分页
+- 自动合并并去除重复账号
+- 一键取关全部剩余用户
+- 显示处理进度、成功、失败和剩余人数
+- 名单和执行进度仅保存在 Loon 本地
 
-## Installation
+## 系统要求
 
-[One-click Import](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Ffafatop%2Ffanka-unfollow%2Fmain%2Fmain.plugin)
+- 仅支持 iOS
+- 在系统设置中允许 Loon 发送通知
+- Loon 3.5.1（983）或更高版本
+- 开启 Loon 的脚本、重写和 MITM 功能
+- 安装并信任 Loon 的 MITM 证书
 
-Manual plugin URL:
+## 安装
+
+[一键导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Ffafatop%2Ffanka-unfollow%2Fmain%2Fmain.plugin)
+
+也可以复制以下地址，在 Loon 中手动添加插件：
 
 ```text
 https://raw.githubusercontent.com/fafatop/fanka-unfollow/main/main.plugin
 ```
 
-## Usage
+## 使用方法
 
-1. Enable the plugin and Loon.
-2. Open either the non-mutual-follow list or the banned/deactivated account list in Finka.
-3. Tap the Loon notification to open the local control page.
-4. Select `获取完整名单` to retrieve both lists and all cursor pages.
-5. Verify the total, then select `一键取关全部剩余用户`.
-6. Keep the page open to watch live progress. The stop control prevents a new round from starting after the current round completes.
+1. 安装并启用插件。
+2. 开启 Loon。
+3. 在翻咔中进入“未回关”或“封禁/注销用户”页面。
+4. Loon 会弹出“翻咔取关助手”通知。
+5. 点击通知进入本地管理页面。
+6. 点击 `获取完整名单`。
+7. 等待页面显示“名单已完整”，并核对名单人数。
+8. 点击 `一键取关全部剩余用户`。
+9. 保持管理页面打开，即可查看实时处理进度。
 
-## Privacy
+管理页面会显示：
 
-The plugin does not upload the captured account list. It stores the list, request context, and progress locally through Loon's `$persistentStore`. Authentication headers are used only for requests from the local Loon script to Finka's API.
+- 名单总人数
+- 已处理人数
+- 剩余人数
+- 成功人数
+- 失败人数
+- 当前完成百分比
 
-## Notes
+如需停止，可以点击 `完成当前轮后停止`。插件会完成当前轮，但不会继续启动下一轮。
 
-- The plugin automates normal per-account unfollow requests; it does not modify membership status.
-- Finka may change its API at any time. Review failures shown on the progress page before retrying.
-- Use this plugin only with your own account and at your own discretion.
+## 工作方式
 
-## License
+插件调用的是翻咔正常的单个账号取关接口。
 
-MIT
+一键取关时，插件会使用受控并发依次处理名单，并在发生网络错误、接口错误或限流时自动等待和重试。
 
+本插件不会修改翻咔会员状态，也不包含会员功能解锁或账号权限修改。
+
+## 隐私说明
+
+插件不会上传获取到的账号名单。
+
+以下内容仅通过 Loon 的 `$persistentStore` 保存在本机：
+
+- 获取到的账号 ID
+- 名单分页状态
+- 取关执行进度
+- 成功和失败记录
+- 调用翻咔接口所需的请求信息
+
+相关请求信息只会由本机上的 Loon 脚本用于访问翻咔接口。
+
+## 注意事项
+
+- 请仅在自己的翻咔账号上使用。
+- 开始前请先核对管理页面显示的名单人数。
+- 翻咔可能随时调整接口，接口发生变化后插件可能需要更新。
+- 如果页面显示取关失败，请先查看失败数量，避免立即重复执行。
+- 使用本插件产生的账号操作由使用者自行决定并承担相应责任。
+
+## 开源许可
+
+本项目采用 MIT License。
+
+## 项目地址
+
+[https://github.com/fafatop/fanka-unfollow](https://github.com/fafatop/fanka-unfollow)
