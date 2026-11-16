@@ -10,6 +10,14 @@
     try { return String(error); } catch (_) { return "unknown error"; }
   }
 
+  function createActionToken() {
+    let token = Date.now().toString(36);
+    for (let i = 0; i < 4; i += 1) {
+      token += ("0000000" + Math.floor(Math.random() * 0x100000000).toString(36)).slice(-7);
+    }
+    return token;
+  }
+
   function queryValue(url, name) {
     const query = String(url || "").split("?")[1] || "";
     const parts = query.split("#")[0].split("&");
@@ -25,18 +33,29 @@
   }
 
   function copyHeaders(headers) {
-    const blocked = {
-      "accept-encoding": true,
-      "connection": true,
-      "content-length": true,
-      "digest": true,
-      "host": true,
-      "proxy-connection": true,
-      "transfer-encoding": true
+    const allowed = {
+      "accept": true,
+      "accept-language": true,
+      "user-agent": true,
+      "x-aloha-sassid": true,
+      "x-app-auth": true,
+      "x-app-bluedeviceinfo": true,
+      "x-app-device": true,
+      "x-app-devicename": true,
+      "x-app-digitalalliance-id": true,
+      "x-app-guid": true,
+      "x-app-location": true,
+      "x-app-package": true,
+      "x-app-user": true,
+      "x-app-version": true,
+      "x-screen-height": true,
+      "x-screen-topsafeareaheight": true,
+      "x-screen-width": true,
+      "x-version-build": true
     };
     const result = {};
     Object.keys(headers || {}).forEach(function (name) {
-      if (!blocked[String(name).toLowerCase()]) result[name] = headers[name];
+      if (allowed[String(name).toLowerCase()]) result[name] = headers[name];
     });
     return result;
   }
@@ -106,15 +125,23 @@
         updatedAt: now,
         ids: pageIds,
         headers: copyHeaders($request.headers),
+        actionToken: createActionToken(),
         sources: {},
         scanComplete: false,
         progress: { nextIndex: 0, success: 0, failed: 0, failures: [] }
       };
     } else {
-      db.ids = mergeIds(db.ids, pageIds);
+      if (!db.actionToken) db.actionToken = createActionToken();
+      if (!cursorUsed) {
+        db.ids = pageIds;
+        db.sources = {};
+        db.capturedAt = now;
+        db.progress = { nextIndex: 0, success: 0, failed: 0, failures: [] };
+      } else {
+        db.ids = mergeIds(db.ids, pageIds);
+      }
       db.headers = copyHeaders($request.headers);
       if (!db.sources || typeof db.sources !== "object") db.sources = {};
-      if (!cursorUsed) db.progress = { nextIndex: 0, success: 0, failed: 0, failures: [] };
       db.scanComplete = false;
       db.updatedAt = now;
     }
